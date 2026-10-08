@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f6fc">
+  <title>Qui gagnera les 2 points ?</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='8' y='8' width='48' height='48' rx='12' fill='%235746c5'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='40' fill='white'%3E2%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!--
+  THESIS: A projector-ready Millionaire classroom stage, directed by the teacher.
+  OWN-WORLD: Ice-white ground, navy Barlow type, violet controls, gold prize markers; crisp answer plates and a ten-step ladder.
+  STORY: Choose a pupil in class, load ten questions, use three human-operated jokers, reveal answers with suspense. Ten successes earn two points.
+  FIRST VIEWPORT: Header controls above a broad question stage; right prize rail; four large A–D answers; jokers below; one clear pacing action.
+  FORM: Brief-pinned light television quiz stage; seed f84040a6. Signature motion: suspense pulses the chosen answer before a colored, labeled reveal.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V3m-4 4 4-4 4 4M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5ZM15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-muted" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5Zm5 5 6 6m0-6-6 6"/></symbol>
+    <symbol id="i-screen" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 21v-3a8 8 0 0 1 16 0v3"/></symbol>
+    <symbol id="i-friends" viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M2 21v-3a7 7 0 0 1 14 0v3M17 4a4 4 0 0 1 0 8m2 3a6 6 0 0 1 3 5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 3h10v7a5 5 0 0 1-10 0Zm10 1h4v3a4 4 0 0 1-4 4M7 4H3v3a4 4 0 0 0 4 4m5 4v6m-4 0h8"/></symbol>
+    <symbol id="i-restart" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2 7M3 4v7h7"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.5"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <header class="app-header">
+      <a class="brand" href="./index.html" aria-label="Qui gagnera les 2 points ? Accueil">
+        <span class="brand-mark" aria-hidden="true">2<span>pts</span></span>
+        <span class="brand-title">Qui gagnera<br><strong>les 2 points ?</strong></span>
+      </a>
+      <div class="header-actions">
+        <button class="button button-quiet import-button" id="import-button" type="button"><svg class="icon"><use href="#i-upload"/></svg><span>Charger mes questions</span></button>
+        <button class="button button-icon" id="sound-button" type="button" aria-label="Désactiver les sons" aria-pressed="true" title="Désactiver les sons"><svg class="icon"><use id="sound-icon" href="#i-sound"/></svg></button>
+        <button class="button button-icon" id="fullscreen-button" type="button" aria-label="Passer en plein écran" title="Plein écran (F)"><svg class="icon"><use href="#i-screen"/></svg></button>
+      </div>
+    </header>
+
+    <div class="session-bar">
+      <span class="session-label"><span class="live-dot" aria-hidden="true"></span><span id="session-status">À vous de jouer</span></span>
+      <span class="dataset-label" id="dataset-label">Questions de démonstration</span>
+      <button class="text-button" id="guide-button" type="button"><svg class="icon"><use href="#i-info"/></svg>Mode d’emploi</button>
+    </div>
+
+    <main class="game-layout">
+      <section class="stage" aria-label="Plateau de jeu">
+        <div class="stage-topline">
+          <span class="question-count" id="question-count">10 questions · 3 jokers</span>
+          <span class="prize-label" id="prize-label"><svg class="icon"><use href="#i-trophy"/></svg>Objectif : 1 000 000</span>
+        </div>
+
+        <div class="intro" id="intro">
+          <div class="intro-copy">
+            <h1>Le million en jeu.<br><span>2 points à gagner.</span></h1>
+            <p>Un élève, dix questions, trois coups de pouce.<br>La classe retient son souffle… à vous de jouer !</p>
+            <div class="rules-strip"><span><strong>4</strong> réponses au choix</span><span><strong>10</strong> bonnes réponses pour gagner</span></div>
+          </div>
+          <div class="million-emblem" aria-hidden="true">
+            <svg viewBox="0 0 200 200"><circle class="emblem-ring" cx="100" cy="100" r="88"/><circle cx="100" cy="100" r="69"/><path d="m100 17 6 13-6 13-6-13Zm0 140 6 13-6 13-6-13ZM17 100l13-6 13 6-13 6Zm140 0 13-6 13 6-13 6"/><path d="m41 41 13 4 4 13-13-4Zm101 101 13 4 4 13-13-4ZM41 159l4-13 13-4-4 13Zm101-101 4-13 13-4-4 13"/></svg>
+            <div class="emblem-number">2<span>points</span></div>
+          </div>
+        </div>
+
+        <div class="question-board" id="question-board" hidden>
+          <div class="question-heading"><span class="question-number" id="question-number" aria-hidden="true">01</span><h1 id="question-text" tabindex="-1"></h1></div>
+          <div class="answers" id="answers" role="group" aria-label="Choisir une réponse"></div>
+        </div>
+
+        <div class="end-board" id="end-board" hidden>
+          <div class="end-icon" id="end-icon"><svg class="icon"><use href="#i-trophy"/></svg></div>
+          <h1 id="end-title"></h1>
+          <p class="end-description" id="end-description"></p>
+          <div class="end-stats"><div><strong id="end-correct">0 / 10</strong><span>bonnes réponses</span></div><div><strong id="end-prize">0</strong><span>palier atteint</span></div><div><strong id="end-points">0 point</strong><span>récompense</span></div></div>
+        </div>
+
+        <div class="feedback" id="feedback" role="status" aria-live="polite" aria-atomic="true"><span id="feedback-text">Choisissez votre élève. Le plateau est prêt.</span><span class="suspense-dots" id="suspense-dots" aria-hidden="true" hidden><i></i><i></i><i></i></span></div>
+
+        <div class="lifelines" role="group" aria-label="Les trois jokers">
+          <span class="lifelines-label">Vos jokers</span>
+          <button class="lifeline" id="fifty-button" type="button" disabled><span class="fifty-symbol" aria-hidden="true">50:50</span><span>Deux réponses<small id="fifty-state">Disponibles</small></span></button>
+          <button class="lifeline" id="teacher-button" type="button" disabled><svg class="icon"><use href="#i-person"/></svg><span>Le professeur<small id="teacher-state">Disponible</small></span></button>
+          <button class="lifeline" id="friend-button" type="button" disabled><svg class="icon"><use href="#i-friends"/></svg><span>Un ami<small id="friend-state">Disponible</small></span></button>
+        </div>
+
+        <div class="stage-actions">
+          <div class="action-hint" id="action-hint">La récompense : +2 points si tout est juste.</div>
+          <div class="action-buttons"><button class="button button-quiet" id="secondary-button" type="button" hidden>Annuler</button><button class="button button-primary" id="primary-button" type="button"><span id="primary-label">Commencer la partie</span><svg class="icon"><use href="#i-arrow"/></svg></button></div>
+        </div>
+      </section>
+
+      <aside class="prize-rail" aria-label="Échelle des gains virtuels">
+        <div class="rail-heading"><h2>Vers le million</h2><svg class="icon"><use href="#i-trophy"/></svg></div>
+        <ol class="prize-ladder" id="prize-ladder" reversed></ol>
+        <div class="reward-note"><span class="reward-value">+2 <small>points</small></span><p>Les 10 réponses justes.<br>Une seule récompense.</p></div>
+      </aside>
+    </main>
+
+    <footer class="app-footer"><span>Le million est virtuel. Le défi est bien réel.</span><span class="keyboard-hint"><kbd>A</kbd>–<kbd>D</kbd> choisir <span class="footer-separator">·</span> <kbd>Entrée</kbd> valider / continuer <span class="footer-separator">·</span> <kbd>F</kbd> plein écran</span></footer>
+  </div>
+  <input id="json-input" type="file" accept=".json,application/json" hidden>
+
+  <dialog class="guide-dialog" id="guide-dialog" aria-labelledby="guide-title">
+    <div class="dialog-top"><h2 id="guide-title">À vous les commandes.</h2><button class="button button-icon" id="close-guide" type="button" aria-label="Fermer le mode d’emploi"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <p>Choisissez un élève dans la classe, puis démarrez. Cliquez sur sa réponse, validez et laissez le suspense jouer. Vous passez vous-même à la question suivante.</p>
+    <ul><li><strong>50:50 :</strong> sélectionnez les deux mauvaises propositions à retirer, puis confirmez. Vous pouvez annuler avant de confirmer.</li><li><strong>Le professeur / Un ami :</strong> donnez la parole à la personne choisie, puis cliquez sur « Reprendre la question ». Chaque joker est utilisable une seule fois par partie.</li><li><strong>Une erreur :</strong> la partie se termine. Les <strong>+2 points</strong> sont attribués uniquement pour 10 réponses correctes.</li></ul>
+    <h3>Vos questions, votre partie.</h3>
+    <p>Chargez un fichier JSON contenant exactement 10 questions de difficulté croissante. Gardez cet ordre : chaque question comporte quatre réponses et une lettre correcte de A à D.</p>
+    <pre><code>{
+  "title": "Mon quiz",
+  "questions": [
+    {
+      "question": "Combien font 2 + 2 ?",
+      "options": ["3", "4", "5", "6"],
+      "correctAnswer": "B",
+      "explanation": "2 + 2 = 4."
+    }
+  ]
+}</code></pre>
+    <p class="guide-note">L’exemple montre une seule question ; votre fichier doit en contenir 10. Un tableau de questions sans objet parent est aussi accepté. Les sons sont créés sur place ; aucune connexion n’est nécessaire.</p>
+  </dialog>
+
+  <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-title">
+    <h2 id="confirm-title">Recommencer la partie ?</h2><p id="confirm-message">La progression et les jokers seront remis à zéro.</p><div class="dialog-actions"><button class="button button-quiet" id="cancel-reset" type="button">Continuer la partie</button><button class="button button-primary" id="confirm-reset" type="button">Recommencer</button></div>
+  </dialog>
+
+  <script id="demo-questions" type="application/json">
+  {
+    "title": "Culture générale · Démonstration",
+    "demo": true,
+    "questions": [
+      {"question":"Combien font 7 + 5 ?","options":["10","11","12","13"],"correctAnswer":"C","explanation":"7 + 5 = 12."},
+      {"question":"Quelle planète est surnommée la planète rouge ?","options":["Vénus","Mars","Jupiter","Saturne"],"correctAnswer":"B","explanation":"Mars est surnommée la planète rouge."},
+      {"question":"Quel périphérique permet de saisir du texte sur un ordinateur ?","options":["L’écran","L’imprimante","Le haut-parleur","Le clavier"],"correctAnswer":"D","explanation":"Le clavier permet de saisir du texte."},
+      {"question":"Combien de côtés possède un hexagone ?","options":["5","6","7","8"],"correctAnswer":"B","explanation":"Un hexagone possède six côtés."},
+      {"question":"Quel langage sert à structurer le contenu d’une page web ?","options":["HTML","CSS","SQL","Python"],"correctAnswer":"A","explanation":"HTML décrit la structure et le contenu d’une page web."},
+      {"question":"Que vaut 15 % de 200 ?","options":["15","20","25","30"],"correctAnswer":"D","explanation":"200 × 0,15 = 30."},
+      {"question":"Quel nombre est premier ?","options":["21","27","29","33"],"correctAnswer":"C","explanation":"29 n’a que deux diviseurs positifs : 1 et 29."},
+      {"question":"Quel nombre binaire correspond à 10 en décimal ?","options":["1001","1010","1100","1110"],"correctAnswer":"B","explanation":"1010 en binaire vaut 8 + 2, soit 10."},
+      {"question":"On lance un dé équilibré à six faces. Quelle est la probabilité d’obtenir un nombre supérieur à 4 ?","options":["1/6","1/4","1/3","1/2"],"correctAnswer":"C","explanation":"Deux résultats sur six conviennent : 5 et 6. 2/6 = 1/3."},
+      {"question":"Une suite commence par 2, 6, 12, 20, 30. Quel est le terme suivant si le terme de rang n vaut n × (n + 1) ?","options":["40","42","44","48"],"correctAnswer":"B","explanation":"Au rang 6, on obtient 6 × 7 = 42."}
+    ]
+  }
+  </script>
+  <noscript><div class="noscript-message">Activez JavaScript pour démarrer la partie.</div></noscript>
+</body>
+</html>

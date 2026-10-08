@@ -1,0 +1,16 @@
+{
+  "title": "Culture générale · Démonstration",
+  "demo": true,
+  "questions": [
+    {"question":"Combien font 7 + 5 ?","options":["10","11","12","13"],"correctAnswer":"C","explanation":"7 + 5 = 12."},
+    {"question":"Quelle planète est surnommée la planète rouge ?","options":["Vénus","Mars","Jupiter","Saturne"],"correctAnswer":"B","explanation":"Mars est surnommée la planète rouge."},
+    {"question":"Quel périphérique permet de saisir du texte sur un ordinateur ?","options":["L’écran","L’imprimante","Le haut-parleur","Le clavier"],"correctAnswer":"D","explanation":"Le clavier permet de saisir du texte."},
+    {"question":"Combien de côtés possède un hexagone ?","options":["5","6","7","8"],"correctAnswer":"B","explanation":"Un hexagone possède six côtés."},
+    {"question":"Quel langage sert à structurer le contenu d’une page web ?","options":["HTML","CSS","SQL","Python"],"correctAnswer":"A","explanation":"HTML décrit la structure et le contenu d’une page web."},
+    {"question":"Que vaut 15 % de 200 ?","options":["15","20","25","30"],"correctAnswer":"D","explanation":"200 × 0,15 = 30."},
+    {"question":"Quel nombre est premier ?","options":["21","27","29","33"],"correctAnswer":"C","explanation":"29 n’a que deux diviseurs positifs : 1 et 29."},
+    {"question":"Quel nombre binaire correspond à 10 en décimal ?","options":["1001","1010","1100","1110"],"correctAnswer":"B","explanation":"1010 en binaire vaut 8 + 2, soit 10."},
+    {"question":"On lance un dé équilibré à six faces. Quelle est la probabilité d’obtenir un nombre supérieur à 4 ?","options":["1/6","1/4","1/3","1/2"],"correctAnswer":"C","explanation":"Deux résultats sur six conviennent : 5 et 6. 2/6 = 1/3."},
+    {"question":"Une suite commence par 2, 6, 12, 20, 30. Quel est le terme suivant si le terme de rang n vaut n × (n + 1) ?","options":["40","42","44","48"],"correctAnswer":"B","explanation":"Au rang 6, on obtient 6 × 7 = 42."}
+  ]
+}

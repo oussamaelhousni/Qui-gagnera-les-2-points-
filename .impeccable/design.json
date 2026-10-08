@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-08T00:00:00Z",
+  "title": "Design System: Qui gagnera les 2 points ?",
+  "extensions": {
+    "shadows": [
+      {"name":"stage","value":"0 12px 36px -20px #69769c4a","purpose":"White stage against the cool ground."},
+      {"name":"dialog","value":"0 20px 90px -10px #222c4d40","purpose":"Protected dialog focus."}
+    ],
+    "motion": [
+      {"name":"state-transition","value":"0.18s","purpose":"Control background and border changes."},
+      {"name":"suspense","value":"0.75s ease-in-out 4","purpose":"Selected answer pulses during the reveal delay."},
+      {"name":"reveal-delay","value":"3200ms","purpose":"Game suspense independent of reduced motion."}
+    ],
+    "breakpoints": [
+      {"name":"narrow-answers","value":"440px"},
+      {"name":"stacked-stage","value":"760px"},
+      {"name":"compact-stage","value":"1000px"},
+      {"name":"narrow-rail","value":"1200px"},
+      {"name":"large-screen","value":"1600px"}
+    ]
+  },
+  "components": [
+    {"name":"Primary Button","kind":"button","refersTo":"button-primary","description":"Teacher-controlled pacing action.","html":"<button class=\"ds-primary\">Question suivante</button>","css":".ds-primary{background:var(--violet,#5746c5);color:#fff;border:0;border-radius:10px;padding:15px 24px;font:600 17px Segoe UI,sans-serif;min-height:56px;cursor:pointer;transition:background .18s}.ds-primary:hover{background:var(--violet-dark,#4535a6)}.ds-primary:focus-visible{outline:3px solid var(--violet,#5746c5);outline-offset:5px}.ds-primary:disabled{background:#dce0ed;color:#5a657d}"},
+    {"name":"Secondary Button","kind":"button","description":"Import or restart action.","html":"<button class=\"ds-secondary\">Charger mes questions</button>","css":".ds-secondary{background:transparent;color:var(--ink,#222c4d);border:1px solid var(--line,#d8deec);border-radius:10px;padding:12px 18px;font:600 15px Segoe UI,sans-serif;min-height:48px;cursor:pointer}.ds-secondary:hover{background:#fff;border-color:#aeb9d4}.ds-secondary:focus-visible{outline:3px solid var(--violet,#5746c5);outline-offset:5px}"},
+    {"name":"Answer Plate","kind":"button","refersTo":"answer","description":"Stable letter and readable answer text.","html":"<button class=\"ds-answer\"><span>A</span>Une réponse au choix</button>","css":".ds-answer{display:flex;align-items:center;gap:16px;background:#fff;color:var(--ink,#222c4d);border:2px solid var(--line,#d8deec);border-radius:14px;padding:15px 20px;min-height:76px;font:600 21px Segoe UI,sans-serif;cursor:pointer}.ds-answer span{color:var(--violet,#5746c5);font-weight:700}.ds-answer:hover{background:#f6f4ff;border-color:#9785e2}.ds-answer:focus-visible{outline:3px solid var(--violet,#5746c5);outline-offset:5px}"},
+    {"name":"Joker","kind":"button","description":"Labeled assistance with an explicit availability state.","html":"<button class=\"ds-joker\"><b>50:50</b><span>Deux réponses<small>Disponible</small></span></button>","css":".ds-joker{display:flex;align-items:center;gap:11px;background:#fff;color:var(--ink,#222c4d);border:1px solid var(--line,#d8deec);border-radius:10px;padding:11px 14px;min-height:63px;text-align:left;font:600 13px Segoe UI,sans-serif;cursor:pointer}.ds-joker b{font-size:23px;color:var(--violet,#5746c5)}.ds-joker small{display:block;font-size:11px;color:var(--muted,#56627b);margin-top:3px}.ds-joker:hover{background:var(--violet-wash,#eeebfc);border-color:var(--violet,#5746c5)}.ds-joker:focus-visible{outline:3px solid var(--violet,#5746c5);outline-offset:5px}"},
+    {"name":"Feedback","kind":"custom","description":"Plain-language reveal and assistance status.","html":"<div class=\"ds-feedback\">Bonne réponse !</div>","css":".ds-feedback{border-radius:10px;padding:14px 17px;background:var(--success-wash,#e4f5eb);color:var(--success,#15613f);font:14px/1.55 Segoe UI,sans-serif}"}
+  ],
+  "narrative": {
+    "northStar": "Le plateau de classe",
+    "overview": "A light television quiz stage for a teacher operating a projector. The question, answer choices and reveal lead the experience. Small controls recede, while the violet action and active prize step establish a consistent visual anchor.\n\nThe surfaces use cool white and pale blue rather than a dark television studio. Prize gold marks anticipation; green and red describe outcomes with explicit text and icons as well as color. Geometry is crisp and intentionally digital.",
+    "keyCharacteristics": ["Large readable questions and answer labels.","Cool surfaces with navy text and violet actions.","Gold suspense, labeled success and labeled failure.","A stable four-answer grid and a sequential prize rail."],
+    "rules": [{"name":"The Outcome Rule","body":"Color never carries a result alone: success and failure include a label and a check or cross icon.","section":"colors"}],
+    "dos": ["Do keep the main question and primary pacing action easy to locate.","Do keep projector-facing content on light, high-contrast surfaces.","Do combine outcome colors with explicit wording and icons.","Do preserve keyboard focus, disabled states and reduced-motion behavior."],
+    "donts": ["Don't communicate a correct answer or used joker by color alone.","Don't describe the virtual prize as real money or award points on intermediate questions.","Don't clip imported question text to enforce a fixed viewport height."]
+  }
+}
